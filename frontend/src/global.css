@@ -1,0 +1,53 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    /*background-color: rgba(227, 227, 227, 1) !important;*/
+}
+
+body {
+    min-height: 100vh;
+}
+
+.monospace {
+    font-family: monospace;
+}
+
+pre {
+    overflow-x: scroll;
+    width: auto;
+}
+
+.MuiIconButton-sizeSmall {
+    padding: 0 !important;
+    margin-left: 5px !important;
+}
+
+.MuiIconButton-sizeSmall > svg {
+    width: 0.6em;
+    height: 0.6em;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/*textarea {*/
+/*    display: block;*/
+/*    color: #FFF;*/
+/*    background-color: #000;*/
+/*    padding: 9px;*/
+/*    border-radius: 5px;*/
+/*    width: 100%;*/
+/*    min-width: 100%;*/
+/*    max-width: 100%;*/
+/*    max-height: 200px;*/
+/*    overflow: scroll;*/
+/*    !*white-space: nowrap;*!*/
+/*}*/
+
+#logo {
+    color: #FFFFFF;
+    text-decoration: none;
+    &:hover {
+        color: #FFFFFF;
+        text-decoration: underline;
+    }
+}
