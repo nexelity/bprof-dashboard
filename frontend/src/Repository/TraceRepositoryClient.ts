@@ -3,7 +3,10 @@ import {Trace} from "../Services/Bprof";
 export class TraceRepositoryClient {
 
     static getHostName() {
-        return process.env.API_HOSTNAME || 'http://localhost:31337';
+        const currentProtocol = window.location.protocol;
+        const currentHostname = window.location.hostname;
+        const newPort = 31337;
+        return `${currentProtocol}//${currentHostname}:${newPort}`;
     }
 
     static async getTraces(
