@@ -10,6 +10,7 @@
     "@types/react": "latest",
     "@types/react-dom": "latest",
     "chart.js": "^4.4.1",
+    "cross-env": "^7.0.3",
     "mui-datatables": "^4.3.0",
     "react": "latest",
     "react-chartjs-2": "^5.2.0",
@@ -19,7 +20,7 @@
     "typescript": "latest"
   },
   "scripts": {
-    "start": "PORT=1337 react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

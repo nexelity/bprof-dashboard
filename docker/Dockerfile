@@ -1,16 +1,17 @@
 FROM node:21-slim as buildFrontend
 WORKDIR /frontend
 ADD ./frontend /frontend
-RUN npm install --maxsockets 1 && npm run build
+RUN npm install -g pnpm && pnpm install && npm run build
 
 FROM node:21-slim as run
-RUN npm install -g serve nodemon && \
+RUN npm install -g serve pnpm nodemon && \
     apt update && \
     apt install supervisor -y
 
 COPY ./docker/supervisor.conf /etc/supervisor/conf.d/services.conf
-COPY --from=buildFrontend /frontend/build /frontend
+COPY ./docker/supervisor-dev.conf /etc/supervisor/conf.d/services-dev.conf
+COPY --from=buildFrontend /frontend /frontend
 COPY ./backend /backend
-RUN npm install --maxsockets 1 --prefix ./backend
+RUN pnpm install --prefix ./backend
 
-CMD ["supervisord", "-c", "/etc/supervisor/conf.d/services.conf"]
+CMD ["supervisord", "-n", "-c", "/etc/supervisor/conf.d/services.conf"]
