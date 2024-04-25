@@ -45,6 +45,8 @@ export default function SingleTrace() {
                     return null;
                 }
 
+                console.log(value);
+
                 return [
                     method ? clazz : null,
                     method,

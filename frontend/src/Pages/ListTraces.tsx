@@ -170,7 +170,6 @@ export default function ListTraces() {
                 chartData: chartData,
             }));
 
-            console.log(chartData);
         });
     }
 

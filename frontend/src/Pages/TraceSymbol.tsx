@@ -68,19 +68,17 @@ export default function TraceSymbol() {
             const tableRowsCallRows = Object.entries(response.trace.perfdata).map(([key, value]) => {
                 let [caller, destination] = key.split(/==>|>>>/);
 
+
+                let typedValue: {ct: number, wt: number, cpu: number, mu: number, pmu: number} = value as any;
                 // We're not interested in this row
                 if (caller !== symbolName) {
                     return null;
                 }
 
-                console.log(key, value);
                 return [
                     key,
-                    "0",
-                    "0",
-                    Math.trunc(value.wt / 1000).toLocaleString() + "ms",
-                    "0ms",
-                    "0%"
+                    typedValue.ct.toLocaleString(),
+                    Math.trunc(typedValue.wt / 1000).toLocaleString() + "ms",
                 ];
             }).filter((row) => row !== null);
             setTableRowsCalls(tableRowsCallRows);
@@ -88,7 +86,7 @@ export default function TraceSymbol() {
         })
     }, [state.id, state.search])
 
-    const tableColumns: MUIDataTableColumn[] = [
+    const tableColumnsLeft: MUIDataTableColumn[] = [
         {
             name: "symbol",
             label: "Symbol",
@@ -154,6 +152,50 @@ export default function TraceSymbol() {
             label: "% of time",
             options: {
                 hint: "The % of exclusive wall time this method took.",
+                filter: false,
+                sort: true,
+                sortCompare: sortNumeric,
+            }
+        },
+    ];
+
+    const tableColumnsRight: MUIDataTableColumn[] = [
+        {
+            name: "symbol",
+            label: "Symbol",
+            options: {
+                filter: false,
+                sort: true,
+                customBodyRender: (value: any, tableMeta: any, updateValue: any) => {
+                    let [a, b] = value.split(/==>|>>>/);
+
+                    if (a && b) {
+                        return <>
+                            <Link href={`/trace/${state.id}/${btoa(b)}`}>{b}</Link>
+                        </>
+                    } else {
+                        return <>
+                            <Link href={`/trace/${state.id}/${btoa(a)}`}>{a}</Link>
+                        </>
+                    }
+                },
+            },
+        },
+        {
+            name: "call_count",
+            label: "Call count",
+            options: {
+                hint: "The amount of times this method gets called",
+                filter: false,
+                sort: true,
+                sortCompare: sortNumeric,
+            }
+        },
+        {
+            name: "wall_time_inclusive",
+            label: "Wall time (Inclusive)",
+            options: {
+                hint: "The amount of time spent in this method AND child methods.",
                 filter: false,
                 sort: true,
                 sortCompare: sortNumeric,
@@ -269,7 +311,7 @@ export default function TraceSymbol() {
                                         <MUIDataTable
                                             title={"Symbols"}
                                             data={tableRowsCalledBy}
-                                            columns={tableColumns}
+                                            columns={tableColumnsLeft}
                                             options={tableOptions}
                                         />
                                     </TableContainer>
@@ -285,8 +327,8 @@ export default function TraceSymbol() {
                                         <MUIDataTable
                                             title={"Symbols"}
                                             data={tableRowsCalls}
-                                            columns={tableColumns}
-                                            // options={tableOptions}
+                                            columns={tableColumnsRight}
+                                            options={tableOptions}
                                         />
                                     </TableContainer>
                                 </Paper>
