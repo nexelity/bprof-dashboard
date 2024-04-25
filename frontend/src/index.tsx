@@ -8,6 +8,7 @@ import './global.css';
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import ListTraces from "./Pages/ListTraces";
 import SingleTrace from "./Pages/SingleTrace";
+import TraceSymbol from "./Pages/TraceSymbol";
 
 const rootElement = document.getElementById('root');
 const root = ReactDOM.createRoot(rootElement!);
@@ -15,6 +16,7 @@ const root = ReactDOM.createRoot(rootElement!);
 const router = createBrowserRouter([
     { path: "/", element: (<App><ListTraces/></App>) },
     { path: "/trace/:traceId", element: (<App><SingleTrace/></App>) },
+    { path: "/trace/:traceId/:symbolId", element: (<App><TraceSymbol/></App>) },
 ]);
 
 root.render(

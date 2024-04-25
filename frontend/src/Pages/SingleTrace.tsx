@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useEffect, useState} from 'react';
 import TableContainer from '@mui/material/TableContainer';
 import InfoIcon from '@mui/icons-material/Info';
 import Paper from '@mui/material/Paper';
@@ -6,48 +7,13 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Link from "@mui/material/Link";
-import {Trace} from "../Services/Bprof";
 import {TraceRepositoryClient} from "../Repository/TraceRepositoryClient";
-import {useEffect, useState} from "react";
-import MUIDataTable, {MUIDataTableColumn, MUIDataTableColumnOptions, MUIDataTableOptions} from "mui-datatables";
+import MUIDataTable, {MUIDataTableColumn, MUIDataTableOptions} from "mui-datatables";
 import {useParams} from "react-router-dom";
 import Tooltip from '@mui/material/Tooltip';
 import {IconButton, Skeleton} from "@mui/material";
 import {sortNumeric, toFixedDown} from "../Services/Utils";
-
-interface IState {
-    id: string;
-    tableRows: (object | string[] | number[])[] | any,
-    trace: Trace | null,
-    totals: {
-        ct: number;
-        wt: number;
-        ut: number;
-        st: number;
-        cpu: number;
-        mu: number;
-        pmu: number;
-        samples: number;
-    } | null,
-    symbols: {
-        [key: string]: {
-            ct: number;
-            wt: number;
-            ut: number;
-            st: number;
-            cpu: number;
-            mu: number;
-            pmu: number;
-            samples: number;
-            callers: number;
-            callerMap: {[key: string]: boolean};
-            excl_ct: number;
-            excl_wt: number;
-        }
-    } | null,
-    mysqlQueries: number;
-    search: string;
-}
+import {IState} from "../Interfaces/IState";
 
 export default function SingleTrace() {
 

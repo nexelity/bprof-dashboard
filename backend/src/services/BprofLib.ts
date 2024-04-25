@@ -187,7 +187,7 @@ export class BprofLib {
     }
 
     parseParentChild(parentChild: string): [string | null, string] {
-        const ret = parentChild.split('>>>');
+        const ret = parentChild.split(/==>|>>>/);
         return ret.length === 2 ? [ret[0], ret[1]] : [null, ret[0]];
     }
 

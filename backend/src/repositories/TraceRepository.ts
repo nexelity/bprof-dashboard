@@ -60,7 +60,7 @@ export class TraceRepository {
         let WHERE = "";
 
         if (search) {
-            WHERE += `(CONCAT(method, " ", url, " ", status_code, " ", server_name, " ", user_id, " ", ip) LIKE ?)`;
+            WHERE += `(CONCAT_WS(method, " ", url, " ", status_code, " ", server_name, " ", user_id, " ", ip) LIKE ?)`;
             params.push(search);
         }
 
@@ -79,13 +79,13 @@ export class TraceRepository {
         }
 
         return this.db.query<Trace[]>(`
-        SELECT id, uuid, url, method, status_code, server_name, ajax, pmu, wt, cpu, user_id, ip, created_at
-        FROM ${TraceRepository.getTableName()}
-        WHERE ${WHERE}
-        ORDER BY id DESC
-        LIMIT ${rowCount}
-        OFFSET ${(page-1)*rowCount}
-    `, params);
+            SELECT id, uuid, url, method, status_code, server_name, ajax, pmu, wt, cpu, user_id, ip, created_at
+            FROM ${TraceRepository.getTableName()}
+            WHERE ${WHERE}
+            ORDER BY id DESC
+            LIMIT ${rowCount}
+            OFFSET ${(page-1)*rowCount}
+        `, params);
     }
 
     public async getTracesCount() {

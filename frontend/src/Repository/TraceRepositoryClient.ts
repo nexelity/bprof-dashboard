@@ -1,4 +1,6 @@
-import {Trace} from "../Services/Bprof";
+import {TraceResponse} from "../Interfaces/TraceResponse";
+import {StatsResponse} from "../Interfaces/StatsResponse";
+import {TracePaginatedResponse} from "../Interfaces/TracePaginatedResponse";
 
 export class TraceRepositoryClient {
 
@@ -39,56 +41,3 @@ export class TraceRepositoryClient {
     }
 }
 
-interface TracePaginatedResponse extends Array<Trace> {
-}
-
-interface TraceResponse {
-    trace: Trace,
-    totals: {
-        ct: number;
-        wt: number;
-        ut: number;
-        st: number;
-        cpu: number;
-        mu: number;
-        pmu: number;
-        samples: number;
-    },
-    symbols: {
-        [key: string]: {
-            ct: number;
-            wt: number;
-            ut: number;
-            st: number;
-            cpu: number;
-            mu: number;
-            pmu: number;
-            samples: number;
-            callers: number;
-            callerMap: {[key: string]: boolean};
-            excl_ct: number;
-            excl_wt: number;
-        }
-    }
-}
-
-interface StatsResponse {
-    total: {
-        count: number;
-    }
-    last_24h: {
-        count: number;
-    }
-    stats: {
-        count: number;
-        avg: number;
-        max: number;
-    }
-    stats_by_day: Array<{
-        day: string;
-        total_rows: number;
-        min_wt: number;
-        avg_wt: number;
-        max_wt: number;
-    }>
-}

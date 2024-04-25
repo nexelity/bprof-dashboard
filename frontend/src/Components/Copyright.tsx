@@ -8,7 +8,7 @@ export default function Copyright() {
         <>
             <Box sx={{textAlign: "center"}}>
                 <Typography variant="subtitle1" component="div" sx={{mt: 3}}>
-                    <Link href="https://github.com/nexelity/bprof-viewer/" target={"_blank"}>BPROF</Link> &copy; {new Date().getFullYear()} - v1.4 (abc238414 2023-01-01)
+                    <Link href="https://github.com/nexelity/bprof-viewer/" target={"_blank"}>BPROF</Link> &copy; {new Date().getFullYear()} - v2.0
                 </Typography>
             </Box>
         </>
